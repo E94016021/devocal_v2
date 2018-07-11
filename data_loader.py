@@ -49,12 +49,12 @@ if __name__ == "__main__":
     # female_ios.csv:   iOS裝置女生唱 照觀看次數排名
     # male_ios.csv:     iOS裝置男生唱 照觀看次數排名
     input_csv = "male_ios.csv"
-    input_song_folder = "./17sing/song"
-    input_bg_folder = "./17sing/final_music"
+    input_song_folder = "/home/slee/nas/music_grp/17sing/song"
+    input_bg_folder = "/home/slee/nas/music_grp/17sing/final_music"
 
     output_csv = "file_table.csv"
     # TODO : ffmpeg need exist folder
-    output_vocal_folder = "./17sing/vocal"
+    output_vocal_folder = "/home/slee/nas/music_grp/17sing/vocal"
     output_file_type = ".mp3"
     #########################################
 
@@ -65,17 +65,9 @@ if __name__ == "__main__":
                       'song_id', 'music_id',
                       'song_path', 'bg_path', 'result_path', 'song_duration', 'bg_duration', 'result_duration',
                       'error_text']
-        table = [' ', ' ', ' ', ' ', ' ',
-                 ' ', ' ', ' ',
-                 ' ', ' ',
-                 ' ', ' ', ' ', ' ', ' ', ' ', ' ']
         # card_sample = ['clear', 'shift', 'volume_ratio',
         #         'song_sr', 'bg_sr', 'result_sr',
         #         'song_duration', 'bg_duration', 'result_duration', 'result_norm_ave', 'error_text']
-        card = ['.', '.', '.',
-                '.', '.', '.',
-                '.', '.', '.', '.',
-                '.']
 
         # 將 dictionary 寫入 CSV 檔
         writer = csv.DictWriter(t, fieldnames=fieldnames)
@@ -92,6 +84,14 @@ if __name__ == "__main__":
         print("start for-loop and get_data")
 
         for data in l:
+            table = [' ', ' ', ' ', ' ', ' ',
+                     ' ', ' ', ' ',
+                     ' ', ' ',
+                     ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+            card = ['.', '.', '.',
+                    '.', '.', '.',
+                    '.', '.', '.', '.',
+                    '.']
             try:
                 print("\nfor-loop", i + 1, "times")
 
