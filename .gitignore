@@ -7,3 +7,4 @@ male_ios.csv
 female_ios.csv
 file_table.csv
 *.csv
+*.csv#
