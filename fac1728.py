@@ -8,6 +8,8 @@ import npp
 from write_arr_mp3 import write_arr_mp3
 import os
 
+def gg(fn):
+    print(fn)
 
 def ms2sample(time_ms, sr=44100):
     time_sample = int(round(time_ms / 1000 * sr, 0))
@@ -33,16 +35,16 @@ def compute_t_v(mix, bg, time):
 
     vol_ratio = a / b
 
-    print("LA.norm(bg) =", a, "LA.norm(mix) =", b)
-    print("vol_ratio =", a / b)
+    # print("LA.norm(bg) =", a, "LA.norm(mix) =", b)
+    # print("vol_ratio =", a / b)
 
     # vol_ratio = LA.norm(bg) / LA.norm(mix)
     if vol_ratio == np.nan:
-        print("NAN error : set vol_ratio = 1")
+        # print("NAN error : set vol_ratio = 1")
 
         return fine_sample_shift, 1
     else:
-        print("     vol_ratio = ", vol_ratio)
+        # print("     vol_ratio = ", vol_ratio)
         return fine_sample_shift, vol_ratio
 
 
@@ -61,16 +63,16 @@ def compute_vol_ratio_bgNorm(mix, bg, time):
 
     # vol_ratio = LA.norm(bg) / LA.norm(mix)
     if vol_ratio == np.nan:
-        print("NAN error : set vol_ratio = 1")
+        # print("NAN error : set vol_ratio = 1")
 
         return 1, a
     else:
-        print("     vol_ratio = ", vol_ratio)
+        # print("     vol_ratio = ", vol_ratio)
         return vol_ratio, a
 
 
 def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
-    print("-----deal with ---", bg_file, "---")
+    # print("-----deal with ---", bg_file, "---")
     card_sample = ['clear', 'shift', 'volume_ratio',
                    'song_sr', 'bg_sr', 'result_sr',
                    'song_duration', 'bg_duration', 'result_duration', 'result_norm_ave',
@@ -86,8 +88,8 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
     bg_duration = len(bg)
 
     if sr_mix != sr_bg:
-        print("sr_mix, sr_bg = ", sr_mix, ",", sr_bg,
-              "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - sr not match")
+        # print("sr_mix, sr_bg = ", sr_mix, ",", sr_bg,
+        #       "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - sr not match")
         card = [0, ' ', ' ',
                 sr_mix, sr_bg, ' ',
                 song_duration, bg_duration, ' ', ' ', 'sr not match']
@@ -97,9 +99,9 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
     elif sr_mix == 22050:
         shift = -1728 / 2
     else:
-        print("- - - - - - get_vocal error of if function - - - - - - - ")
-        print("sr_mix =", sr_mix,end='  ')
-        print("sr_bg =", sr_bg)
+        # print("- - - - - - get_vocal error of if function - - - - - - - ")
+        # print("sr_mix =", sr_mix,end='  ')
+        # print("sr_bg =", sr_bg)
         card = [0, ' ', ' ',
                 sr_mix, sr_bg, ' ',
                 song_duration, bg_duration, ' ', ' ', 'get_vocal error of if function']
@@ -116,8 +118,8 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
     if time < 1000:
         card[0] = 0
         card[10] = 'lyric might have wrong start'
-        print(
-            "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - lyric might have wrong start")
+        # print(
+        #     "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - lyric might have wrong start")
         return card
 
     # 單位變換，從ms換成sample
@@ -147,10 +149,10 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
     result_norm = LA.norm(result[:time])
     result_norm_ave = result_norm / time
 
-    print("result_norm, bg_norm, time =", result_norm, ",", bg_norm, ",", time)
-    print("result_norm_ave =", result_norm_ave, end='   ')
+    # print("result_norm, bg_norm, time =", result_norm, ",", bg_norm, ",", time)
+    # print("result_norm_ave =", result_norm_ave, end='   ')
     result_norm_ave = int(result_norm_ave * 10000000)
-    print("result_norm_ave in 10^7 =", result_norm_ave)
+    # print("result_norm_ave in 10^7 =", result_norm_ave)
 
     if result_norm < bg_norm:
         # print("out_file, result, sr = ", out_file, ",", result, ",", sr)
@@ -162,7 +164,9 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
         fn = os.path.join(dn, fn)
 
         # TODO : 輸出 result mp3
-        write_arr_mp3(fn, result, sr)
+        # write_arr_mp3(fn, result, sr)
+        gg(fn)
+
         print(
             "   result_norm < bg_norm * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * ! ! ! de success ! ! !")
         card = [1, shift, vol,
@@ -179,8 +183,8 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
         fn = os.path.join(dn, fn)
         # TODO : output file
         # write_arr_mp3(fn, result, sr)
-        print(
-            "   result_norm > bg_norm - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ! ! ! de fail ! ! !")
+        # print(
+        #     "   result_norm > bg_norm - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ! ! ! de fail ! ! !")
         card = [0, shift, vol,
                 sr_mix, sr_bg, sr_result,
                 song_duration, bg_duration, result_duration, result_norm_ave, 'de fail']

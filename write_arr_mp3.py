@@ -5,7 +5,7 @@ import librosa
 
 
 def write_arr_mp3(file_name='mp3.mp3', array: np.ndarray = [], sr=44100):
-    print("write_mp3_start")
+    print("write_mp3_start",file_name)
     try:
 
         # TODO: stereo to mono ?

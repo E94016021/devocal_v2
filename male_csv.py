@@ -48,7 +48,7 @@ if __name__ == "__main__":
     # files location block ##################
     # female_ios.csv:   iOS裝置女生唱 照觀看次數排名
     # male_ios.csv:     iOS裝置男生唱 照觀看次數排名
-    input_csv = "female_ios.csv"
+    input_csv = "male_ios.csv"
     input_song_folder = "/home/slee/nas/music_grp/17sing/song"
     input_bg_folder = "/home/slee/nas/music_grp/17sing/final_music"
 

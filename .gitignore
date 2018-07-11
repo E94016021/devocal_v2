@@ -6,3 +6,4 @@ __pycache__
 male_ios.csv
 female_ios.csv
 file_table.csv
+*.csv
