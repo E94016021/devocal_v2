@@ -8,8 +8,10 @@ import npp
 from write_arr_mp3 import write_arr_mp3
 import os
 
+
 def gg(fn):
     print(fn)
+
 
 def ms2sample(time_ms, sr=44100):
     time_sample = int(round(time_ms / 1000 * sr, 0))
@@ -84,6 +86,20 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
     # 讀audio檔
     mix, sr_mix = librosa.load(mix_file, sr=None)
     bg, sr_bg = librosa.load(bg_file, sr=None)
+
+    # # TODO: plt
+    # mix1, sr_mix = librosa.load(mix_file, sr=None, duration=10)
+    # bg1, sr_bg = librosa.load(bg_file, sr=None, duration=10)
+    # import librosa.display as d
+    # import matplotlib.pyplot as plt
+    # plt.figure()
+    # d.waveplot(mix1, sr=sr_mix)
+    # plt.title('mix')
+    # plt.figure()
+    # d.waveplot(bg1, sr=sr_bg)
+    # plt.title('bg')
+    # ###
+
     song_duration = len(mix)
     bg_duration = len(bg)
 

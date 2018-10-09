@@ -8,3 +8,11 @@ female_ios.csv
 file_table.csv
 *.csv
 *.csv#
+/test_backup
+/test
+test_backup/18043_K歌之王(國語版)/
+test_backup/20106_海嘯/
+test_backup/54874_非你莫屬/
+test_backup/64335_擊敗人/
+test_backup/test.mp3
+vocal/
