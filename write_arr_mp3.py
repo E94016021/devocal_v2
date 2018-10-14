@@ -5,7 +5,17 @@ import librosa
 
 
 def write_arr_mp3(file_name='mp3.mp3', array: np.ndarray = [], sr=44100):
-    print("write_mp3_start",file_name)
+    file_exist = os.path.exists(file_name)
+    if file_exist:
+        print(file_name, "exist ! !")
+        return
+    # TODO : ffmpeg need exist folder .
+    dir_name = os.path.dirname(file_name)
+    if not os.path.exists(dir_name):
+        # os.mkdir(dir_name)
+        os.makedirs(dir_name)
+
+    print("write_mp3_start", file_name)
     try:
 
         # TODO: stereo to mono ?
@@ -35,6 +45,8 @@ def write_arr_mp3(file_name='mp3.mp3', array: np.ndarray = [], sr=44100):
         pipe.stdout.close()
         pipe.stdin.close()
         pipe.stderr.close()
+    except BrokenPipeError as bpe:
+        print(bpe, ": ffmpeg need exist folder .")
     except Exception as e:
         print(e)
 
@@ -73,7 +85,9 @@ def write_arr_mp3(file_name='mp3.mp3', array: np.ndarray = [], sr=44100):
 
 
 if __name__ == '__main__':
-    file_name = "out.mp3"
-    file = "./17sing/final_music/52899-算什麼男人/算什麼男人.mp3"
+    file_name = "vocal/test/out.mp3"
+    file = "test/6139_對摺/6139_對摺.mp3"
+    a = os.path.dirname(file)
+    b = os.path.exists(file)
     music_array, sr = librosa.load(file, sr=None)
     write_arr_mp3(file_name, music_array, sr)

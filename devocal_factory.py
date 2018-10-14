@@ -29,7 +29,6 @@ if __name__ == "__main__":
     input_song_folder = "/home/slee/nas/music_grp/17sing/v2"
     input_song_folder = "./test"
     output_csv = "male_table.csv"
-    # TODO : ffmpeg need exist folder
     output_vocal_folder = "/home/slee/nas/music_grp/17sing/v2_vocal"
     output_vocal_folder = "./vocal"
     output_file_type = ".mp3"
