@@ -4,6 +4,7 @@ import librosa
 
 from fac1728 import get_vocal_mp3
 import audio_load as al
+from data_loader import Loader
 
 if __name__ == "__main__":
 
@@ -45,15 +46,17 @@ if __name__ == "__main__":
         #         'song_sr', 'bg_sr', 'result_sr',
         #         'song_duration', 'bg_duration', 'result_duration', 'result_norm_ave', 'error_text']
 
-        # 將 dictionary 寫入 CSV 檔
-        writer = csv.DictWriter(t, fieldnames=fieldnames)
-
-        # 寫入第一列的欄位名稱
-        writer.writeheader()
-
+        # # 將 dictionary 寫入 CSV 檔
+        # writer = csv.DictWriter(t, fieldnames=fieldnames)
+        #
+        # # 寫入第一列的欄位名稱
+        # writer.writeheader()
+        #
         # print("\nstart Loader")
         # l = Loader(input_csv, input_song_folder, input_bg_folder)
         # cnt = len(l.data)
+
+        # TODO: 1. Exist skip system 2. Write to csv
         dir_list = os.listdir(input_song_folder)
         for music_dir in dir_list:
             try:
@@ -86,10 +89,18 @@ if __name__ == "__main__":
                         m_name = file.split(song_spliter)[0] + file.split(song_spliter)[1]
                         d_bg_file = os.path.join(input_song_folder, music_dir, m_name)
                         d_out_file = os.path.join(output_vocal_folder, file)
+                        # try if ouput file exist
+                        os.listdir()
 
-                        card = get_vocal_mp3(d_mix_file, d_bg_file, d_lyric_file, d_out_file)
-                        print(d_mix_file, ":", card[10])
-                        print(".")
+                        try:
+                            card = get_vocal_mp3(d_mix_file, d_bg_file, d_lyric_file, d_out_file)
+                            print(d_mix_file, ":", card[10])
+                            print(".")
+                        except Exception as e:
+                            print(
+                                "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+                            print(e)
+                            card[10] = e
 
                 print(".")
 
@@ -97,73 +108,73 @@ if __name__ == "__main__":
                 # print(nade)
                 pass
 
-        print(".")
+print(".")
 
-        # # print("---Start ProcessPoolExecutor and check missing songs---")
-        # i = 0
-        #
-        # # print("start for-loop and get_data")
-        #
-        # for data in l:
-        #     table = [' ', ' ', ' ', ' ', ' ',
-        #              ' ', ' ', ' ',
-        #              ' ', ' ',
-        #              ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-        #     card = ['.', '.', '.',
-        #             '.', '.', '.',
-        #             '.', '.', '.', '.',
-        #             '.']
-        #     try:
-        #         # print("\nfor-loop", i + 1, "times")
-        #
-        #         lp = data['lyric_path']
-        #
-        #         mp = l.music_path
-        #         mn, mi = data['music_name'], data['music_id']
-        #
-        #         sp = l.song_path
-        #         sn, si = data['music_name'], data['song_id']
-        #
-        #         d_mix_file = os.path.join(sp, mi + "-" + sn, si + ".mp3")
-        #         d_bg_file = os.path.join(mp, mi + "-" + mn, mn + ".mp3")
-        #         d_lyric_file = lp
-        #
-        #         # TODO: ouput mp3 or wav
-        #         d_out_file = os.path.join(output_vocal_folder,
-        #                                   mi + "_" + mn + "_" + si + output_file_type)
-        #
-        #         # print("path done & start devocal")
-        #         try:
-        #             card = get_vocal_mp3(d_mix_file, d_bg_file, d_lyric_file, d_out_file)
-        #
-        #             # print("     " + mn + " done")
-        #             # 這裡不能插空白
-        #         except Exception as e:
-        #             # print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
-        #             # print(e)
-        #             card[10] = e
-        #
-        #         # TODO : write csv
-        #
-        #         try:
-        #             card[10] = data['error']
-        #         except Exception:
-        #             pass
-        #
-        #         table = [card[0], card[9], mn, card[1], card[2],
-        #                  card[3], card[4], card[5],
-        #                  si, mi,
-        #                  d_mix_file, d_bg_file, d_out_file,
-        #                  card[6], card[7], card[8], card[10]]
-        #
-        #         list_dict = {key: value for key, value in zip(fieldnames, table)}
-        #         writer.writerow(list_dict)
-        #         t.flush()
-        #
-        #         i += 1
-        #         # print("\n")
-        #         continue
-        #     except Exception as e:
-        #         # print("ERROR: for  data in l :", e)
-        #         if i == cnt + 1 or i == cnt - 1 or i == cnt:
-        #             break
+# # print("---Start ProcessPoolExecutor and check missing songs---")
+# i = 0
+#
+# # print("start for-loop and get_data")
+#
+# for data in l:
+#     table = [' ', ' ', ' ', ' ', ' ',
+#              ' ', ' ', ' ',
+#              ' ', ' ',
+#              ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+#     card = ['.', '.', '.',
+#             '.', '.', '.',
+#             '.', '.', '.', '.',
+#             '.']
+#     try:
+#         # print("\nfor-loop", i + 1, "times")
+#
+#         lp = data['lyric_path']
+#
+#         mp = l.music_path
+#         mn, mi = data['music_name'], data['music_id']
+#
+#         sp = l.song_path
+#         sn, si = data['music_name'], data['song_id']
+#
+#         d_mix_file = os.path.join(sp, mi + "-" + sn, si + ".mp3")
+#         d_bg_file = os.path.join(mp, mi + "-" + mn, mn + ".mp3")
+#         d_lyric_file = lp
+#
+#         # TODO: ouput mp3 or wav
+#         d_out_file = os.path.join(output_vocal_folder,
+#                                   mi + "_" + mn + "_" + si + output_file_type)
+#
+#         # print("path done & start devocal")
+#         try:
+#             card = get_vocal_mp3(d_mix_file, d_bg_file, d_lyric_file, d_out_file)
+#
+#             # print("     " + mn + " done")
+#             # 這裡不能插空白
+#         except Exception as e:
+#             # print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+#             # print(e)
+#             card[10] = e
+#
+#         # TODO : write csv
+#
+#         try:
+#             card[10] = data['error']
+#         except Exception:
+#             pass
+#
+#         table = [card[0], card[9], mn, card[1], card[2],
+#                  card[3], card[4], card[5],
+#                  si, mi,
+#                  d_mix_file, d_bg_file, d_out_file,
+#                  card[6], card[7], card[8], card[10]]
+#
+#         list_dict = {key: value for key, value in zip(fieldnames, table)}
+#         writer.writerow(list_dict)
+#         t.flush()
+#
+#         i += 1
+#         # print("\n")
+#         continue
+#     except Exception as e:
+#         # print("ERROR: for  data in l :", e)
+#         if i == cnt + 1 or i == cnt - 1 or i == cnt:
+#             break

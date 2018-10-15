@@ -169,15 +169,18 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
                 song_duration, bg_duration, result_duration, result_norm_ave, ' ']
         return card
     else:
-        # 輸出result with norm_value_fileName，回傳card
-        fn = os.path.basename(out_file)
-        fn = "norm_" + str(int(result_norm_ave)) + "_" + fn
-        dn = os.path.dirname(out_file)
-        dn = os.path.join(dn, "error")
-        fn = os.path.join(dn, fn)
-        write_arr_mp3(fn, result, sr)
-        # print(
-        #     "   result_norm > bg_norm - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ! ! ! de fail ! ! !")
+        # # 輸出result with norm_value_fileName，回傳card
+        # fn = os.path.basename(out_file)
+        # fn = "norm_" + str(int(result_norm_ave)) + "_" + fn
+        # dn = os.path.dirname(out_file)
+        # dn = os.path.join(dn, "error")
+        # fn = os.path.join(dn, fn)
+
+        # not write file
+        # write_arr_mp3(fn, result, sr)
+
+        print(
+            "   result_norm > bg_norm - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ! ! ! de fail ! ! !")
         card = [0, shift, vol,
                 sr_mix, sr_bg, sr_result,
                 song_duration, bg_duration, result_duration, result_norm_ave, 'de fail']
