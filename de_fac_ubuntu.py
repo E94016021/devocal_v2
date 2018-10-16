@@ -189,7 +189,7 @@ if __name__ == "__main__":
 
             if datetime.datetime.now().second == 0:
                 print("\n\n" + str(datetime.datetime.now()))
-                print("Now de_perfect with\n\n", write_cnt, "files")
+                print("Now de_perfect with", write_cnt, "files\n\n")
             ###
             ##
             #
