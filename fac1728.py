@@ -222,6 +222,7 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
         np.savetxt(fn, result)
 
         # write_arr_mp3(fn, result, sr)
+        print("   "+fn)
 
         print(
             "   result_norm > bg_norm - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ! ! ! de fail ! ! !")
