@@ -15,7 +15,7 @@ def write_arr_mp3(file_name='mp3.mp3', array: np.ndarray = [], sr=44100):
         # os.mkdir(dir_name)
         os.makedirs(dir_name)
 
-    print("write_mp3_start", file_name)
+    print("   Write_mp3_start", file_name)
     try:
 
         # TODO: stereo to mono ?

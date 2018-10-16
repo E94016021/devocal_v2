@@ -67,6 +67,7 @@ def compute_vol_ratio_bgNorm(mix, bg, time):
 
 
 def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
+
     # card_sample = ['clear', 'shift', 'volume_ratio',
     #                'song_sr', 'bg_sr', 'result_sr',
     #                'song_duration', 'bg_duration', 'result_duration', 'result_norm_ave',
@@ -100,6 +101,18 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
         card = [0, ' ', ' ',
                 sr_mix, sr_bg, ' ',
                 song_duration, bg_duration, ' ', ' ', 'sr not match']
+
+        # 輸出result with norm_value_fileName，回傳card
+        fn = os.path.basename(out_file)
+        fn = "sr_NOTmatch_" + fn
+        dn = os.path.dirname(out_file)
+        dn = os.path.join(dn, "error")
+        fn = os.path.join(dn, fn)
+
+        # Write null file with only filename
+        result = np.array([])
+        np.savetxt(fn, result)
+
         return card
     elif sr_mix == 44100:
         shift = -1728
@@ -109,6 +122,23 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
         card = [0, ' ', ' ',
                 sr_mix, sr_bg, ' ',
                 song_duration, bg_duration, ' ', ' ', 'get_vocal error of if(sr_mix != sr_bg) function']
+
+        # 輸出result with norm_value_fileName，回傳card
+        fn = os.path.basename(out_file)
+        fn = "sr_NOTmatch_" + fn
+        dn = os.path.dirname(out_file)
+        dn = os.path.join(dn, "error")
+        fn = os.path.join(dn, fn)
+
+        # Write null file with only filename
+        result = np.array([])
+        np.savetxt(fn, result)
+
+
+        # Write null file with only filename
+        result = np.array([])
+        np.savetxt(fn, result)
+
         return card
 
     # sr is coming~
@@ -122,6 +152,18 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
     if time < 1000:
         card[0] = 0
         card[10] = 'lyric might have wrong start (intro time < 1000)'
+
+        # 輸出result with norm_value_fileName，回傳card
+        fn = os.path.basename(out_file)
+        fn = "lyric_wrongSTART_" + fn
+        dn = os.path.dirname(out_file)
+        dn = os.path.join(dn, "error")
+        fn = os.path.join(dn, fn)
+
+        # Write null file with only filename
+        result = np.array([])
+        np.savetxt(fn, result)
+
         return card
 
     # change ms 2 sample rate
@@ -160,7 +202,6 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
 
         # TODO : ouput result mp3
         write_arr_mp3(fn, result, sr)
-        print("Output :", fn)
 
         print(
             "   result_norm < bg_norm * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * ! ! ! de success ! ! !")
@@ -169,14 +210,17 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
                 song_duration, bg_duration, result_duration, result_norm_ave, ' ']
         return card
     else:
-        # # 輸出result with norm_value_fileName，回傳card
-        # fn = os.path.basename(out_file)
-        # fn = "norm_" + str(int(result_norm_ave)) + "_" + fn
-        # dn = os.path.dirname(out_file)
-        # dn = os.path.join(dn, "error")
-        # fn = os.path.join(dn, fn)
+        # 輸出result with norm_value_fileName，回傳card
+        fn = os.path.basename(out_file)
+        fn = "norm_" + str(int(result_norm_ave)) + "_" + fn
+        dn = os.path.dirname(out_file)
+        dn = os.path.join(dn, "error")
+        fn = os.path.join(dn, fn)
 
-        # not write file
+        # Write null file with only filename
+        result = np.array([])
+        np.savetxt(fn, result)
+
         # write_arr_mp3(fn, result, sr)
 
         print(

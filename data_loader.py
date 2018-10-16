@@ -126,6 +126,7 @@ if __name__ == "__main__":
                 # TODO : write csv
 
                 try:
+                    # Catch Loader wrong information .
                     card[10] = data['error']
                 except Exception:
                     pass
