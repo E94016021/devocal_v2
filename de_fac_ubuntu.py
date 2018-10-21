@@ -13,7 +13,7 @@ if __name__ == "__main__":
     time_s = datetime.datetime.now().strftime("%Y%m%d_%H_%M_%S")
     # time_s = datetime.datetime.now()
     table_dir_name = "./table"
-    output_csv = table_dir_name+"/" + time_s + "_table.csv"
+    output_csv = table_dir_name + "/" + time_s + "_table.csv"
     # output_vocal_folder = "/home/slee/nas/music_grp/17sing/v2_vocal"
     output_vocal_folder = "/mnt/nas/music_grp/17sing/v2_vocal"
     output_file_type = ".mp3"
@@ -59,9 +59,11 @@ if __name__ == "__main__":
         # cnt = len(l.data)
 
         # TODO: 1. Exist skip system 2. Write to csv
+        print(datetime.datetime.now(), "start listing existed files")
         # Preprocess sorting dir to newer m_id first .
         d_list = os.listdir(input_song_folder)
         el_list = []
+        print(datetime.datetime.now(), "deal with list")
         for el in d_list:
             el = el.split("_")
             try:
@@ -70,14 +72,15 @@ if __name__ == "__main__":
             except Exception as e:
                 # Dir which not match the format
                 pass
-
+        print(datetime.datetime.now(), "start sorting list")
         el_list = sorted(el_list, key=lambda x: x[0], reverse=True)
         dir_list = []
         for el in el_list:
             d_n = str(el[0]) + "_" + el[1]
             dir_list.append(d_n)
 
-        # buile exist files table
+        # build exist files table
+        print(datetime.datetime.now(), "build exist files table")
         exist_sid_list = []
         for root, dirs, files_ in os.walk(output_vocal_folder):
             for d in dirs:
@@ -105,7 +108,7 @@ if __name__ == "__main__":
                     raise Exception
 
         exist_sid_list.sort()
-        print("* Finish checking exist de_files. count =", len(exist_sid_list))
+        print("* Finish checking exist de_files. count =", len(exist_sid_list), datetime.datetime.now())
 
         for music_dir in dir_list:
             try:
@@ -142,7 +145,8 @@ if __name__ == "__main__":
                     if file_len == 3:
                         sid = file_seg[2].split(".mp3")[0]
                         if sid in exist_sid_list:
-                            print("* sid:", sid, "exist!!")
+                            # print("* sid:", sid, "exist!!")
+                            pass
                         else:
                             d_mix_file = os.path.join(input_song_folder, music_dir, file)
 
@@ -154,14 +158,14 @@ if __name__ == "__main__":
                             try:
                                 card = get_vocal_mp3(d_mix_file, d_bg_file, d_lyric_file, d_out_file)
                                 if card[0] == 1:
-                                    write_cnt= write_cnt+1
+                                    write_cnt = write_cnt + 1
                                 # print(d_mix_file, ":", card[10])
                                 # print(".")
                             except Exception as e:
                                 print(
                                     "- - - - - - - - - - - - - - - - - - - - - - - -"
-                                    "- - - - - - - - - - - - - - - - - - - - - - - -")
-                                print("ERROR : devocal_factory.get_voal_mp3() fail")
+                                    "- - - - - - - - - - - - - - - - - - - - - - - -", datetime.datetime.now())
+                                print("ERROR : devocal_factory.get_voal_mp3() fail ")
                                 print(e)
                                 card[10] = e
 
@@ -179,16 +183,15 @@ if __name__ == "__main__":
                             writer.writerow(list_dict)
                             t.flush()
 
-
-
-
             except NotADirectoryError as nade:
                 print("Input Song dir may have a wrong structure ! !")
                 # print(nade)
                 pass
+            except Exception as e:
+                print(e)
 
-            if datetime.datetime.now().second == 0:
-                print("\n\n" + str(datetime.datetime.now()))
+            if datetime.datetime.now().second > 55:
+                print("\n\n* " + str(datetime.datetime.now()), end=" ")
                 print("Now de_perfect with", write_cnt, "files\n\n")
             ###
             ##

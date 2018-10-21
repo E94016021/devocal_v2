@@ -5,6 +5,7 @@ import numpy as np
 import npp
 from write_arr_mp3 import write_arr_mp3
 import os
+import datetime
 
 
 def ms2sample(time_ms, sr=44100):
@@ -67,7 +68,6 @@ def compute_vol_ratio_bgNorm(mix, bg, time):
 
 
 def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
-
     # card_sample = ['clear', 'shift', 'volume_ratio',
     #                'song_sr', 'bg_sr', 'result_sr',
     #                'song_duration', 'bg_duration', 'result_duration', 'result_norm_ave',
@@ -133,7 +133,6 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
         # Write null file with only filename
         result = np.array([])
         np.savetxt(fn, result)
-
 
         # Write null file with only filename
         result = np.array([])
@@ -204,7 +203,9 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
         write_arr_mp3(fn, result, sr)
 
         print(
-            "   result_norm < bg_norm * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * ! ! ! de success ! ! !")
+            "   result_norm < bg_norm * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * ! ! ! de success ! ! !",
+            end=" ")
+        print(datetime.datetime.now())
         card = [1, shift, vol,
                 sr_mix, sr_bg, sr_result,
                 song_duration, bg_duration, result_duration, result_norm_ave, ' ']
@@ -222,10 +223,12 @@ def get_vocal_mp3(mix_file, bg_file, lyric_file, out_file="out.mp3"):
         np.savetxt(fn, result)
 
         # write_arr_mp3(fn, result, sr)
-        print("   "+fn)
+        print("   " + fn)
 
         print(
-            "   result_norm > bg_norm - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ! ! ! de fail ! ! !")
+            "   result_norm > bg_norm - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ! ! ! de fail ! ! !",
+            end=" ")
+        print(datetime.datetime.now())
         card = [0, shift, vol,
                 sr_mix, sr_bg, sr_result,
                 song_duration, bg_duration, result_duration, result_norm_ave, 'de fail']
