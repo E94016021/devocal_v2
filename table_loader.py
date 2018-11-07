@@ -27,7 +27,7 @@ class TableLoader:
                 self.data.append(row)
 
         self.header = self.data[0]
-        print(self.header)
+        # print(self.header)
         self.data = self.data[1:]  # skip header
 
     def __getitem__(self, sid):
@@ -44,6 +44,9 @@ class TableLoader:
             print("from TableLoader.__getitem__ :", e_gi)
             # d['error'] = e_gi
             return None
+
+    def __len__(self):
+        return len(self.data)
 
 
 if __name__ == "__main__":
