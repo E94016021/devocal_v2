@@ -9,6 +9,7 @@ import datetime
 
 
 """
+test devocal with void record bg
 Conclusion:
         It works ! !
         (shift = 0)(void)
